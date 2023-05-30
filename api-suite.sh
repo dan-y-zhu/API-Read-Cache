@@ -21,7 +21,7 @@ function describe() {
     let TOTAL=$TOTAL+1
 }
 
-function pass() {F
+function pass() {
     echo "pass"
     let PASS=$PASS+1
 }
@@ -299,7 +299,7 @@ if [[ "$VALUE" == '[["Netflix/staash","2016-07-14T19:26:04Z"],["Netflix/Workflow
 else
     fail "$VALUE" '[["Netflix/staash","2016-07-14T19:26:04Z"],["Netflix/Workflowable","2016-05-11T20:13:09Z"],["Netflix/blesk","2015-12-12T00:24:46Z"],["Netflix/Cloud-Prize","2015-12-12T00:24:10Z"],["Netflix/aws-autoscaling","2015-12-12T00:23:13Z"]]'
 fi
- f
+ 
 describe "test-06-04: /view/bottom/10/last_updated = "
 
 VALUE=$(curl -s "$BASE_URL/view/bottom/10/last_updated" |tr -d '\n' |sed -e 's/ //g')

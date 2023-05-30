@@ -46,12 +46,12 @@ This said, because Redis data resides in memory, I tried to be cognizant of how 
 
 This service development was made easier through the addition of a couple packages:
 
-- [celebrate] for request validation
-- [dotenv] to pull in .env values
-- [eslint] for linting/formatting code 
-- [express] for routing/web server setup
-- [octokit] for github API interactions
-- [redis] for caching
+- [celebrate](https://www.npmjs.com/package/celebrate) for request validation
+- [dotenv](https://www.npmjs.com/package/dotenv) to pull in .env values
+- [eslint](https://www.npmjs.com/package/eslint) for linting/formatting code 
+- [express](https://www.npmjs.com/package/express) for routing/web server setup
+- [octokit](https://www.npmjs.com/package/octokit) for Github API interactions
+- [redis](https://www.npmjs.com/package/redis) for caching
 
 # Running The Service
 
@@ -70,7 +70,9 @@ SERVER_PORT=<your port> # Defaults to 3000
 DISABLE_CACHE= true # Forces a write of new data to the cache
 ```
 
-4. Start the server with `npm start`.
+4. Install redis using instructions [here](https://redis.io/docs/getting-started/), then start redis in a window with `redis-server`.
+5. Start the server with `npm start`.
+
 
 # Testing
 
@@ -86,14 +88,17 @@ This being said, here is a running list of open items I would work on/improve (i
 
 - Update the pagination conditional logic in the cached routes handler to not have a defined list. Extend/Reuse this logic 
 to the proxy route handler. 
-Perhaps some "dynamic determination" of whether we need paginated data or not would help here. **There is a current pitfall 
-that my implementation will not fetch all paginated data if a paginated route was proxied through my service**
+
+Some "dynamic determination" of whether we need paginated data or not would help here - I think this can be dertmined by whether we find paginated headers in the Github API response.
+**There is a current pitfall that my implementation will not fetch all paginated data if a paginated route was proxied through my service**
+
 - Better/more granular error handling
+
 Currently, I only added a simple catch-all error handler middleware. The key idea I put forth is that any `console.warning` 
 message would be replaced with a logger call (if we were to productionize this), and we would add additional conditional logic 
 corresponding to response code and error message to be sent to the user. 
 
-- Unit Testing (starting from dataUtils, then through controller classes)
+- Unit Testing (starting from `dataUtils`, then through controller classes)
 - Integration/Smoke Testing
 - Further optimize the Redis key/caching strategy
   - Perhaps we can have dynamically determined TTL for different entries (based on service traffic)
